@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../providers/order_provider.dart';
+import 'package:plaza_grill_tipuro/providers/cart_provider.dart';
+import 'package:plaza_grill_tipuro/config/theme.dart';
 
 class SuccessScreen extends StatelessWidget {
   final String reference;
@@ -15,10 +16,10 @@ class SuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<OrderProvider>();
+    final provider = context.read<CartProvider>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9F9),
+      backgroundColor: AppTheme.background,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -33,9 +34,9 @@ class SuccessScreen extends StatelessWidget {
                     width: 120,
                     height: 120,
                     decoration: BoxDecoration(
-                      color: const Color(0xFF25D366),
+                      color: AppTheme.successGreen,
                       shape: BoxShape.circle,
-                      border: Border.all(color: const Color(0xFF1B1B1B), width: 3),
+                      border: Border.all(color: AppTheme.darkText, width: 3),
                       boxShadow: const [
                         BoxShadow(
                           color: Color(0x33000000),
@@ -58,7 +59,7 @@ class SuccessScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w900,
-                      color: Color(0xFF1B1B1B),
+                      color: AppTheme.darkText,
                       letterSpacing: -0.5,
                     ),
                   ),
@@ -69,7 +70,7 @@ class SuccessScreen extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: Color(0xFF5C3F40),
+                      color: AppTheme.textMuted,
                       height: 1.4,
                     ),
                   ),
@@ -82,16 +83,16 @@ class SuccessScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: const Color(0xFF1B1B1B), width: 2),
+                      border: Border.all(color: AppTheme.darkText, width: 2),
                     ),
                     child: Column(
                       children: [
-                        _buildInfoRow('Referencia', '#$reference'),
+                        _InfoRow(label: 'Referencia', value: '#$reference'),
                         const Padding(
                           padding: EdgeInsets.symmetric(vertical: 12),
-                          child: Divider(color: Color(0xFFE5BDBE), thickness: 1),
+                          child: Divider(color: AppTheme.disabledBackground, thickness: 1),
                         ),
-                        _buildInfoRow('Monto', '$amount Bs'),
+                        _InfoRow(label: 'Monto', value: '$amount Bs'),
                       ],
                     ),
                   ),
@@ -109,11 +110,11 @@ class SuccessScreen extends StatelessWidget {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF25D366),
+                        backgroundColor: AppTheme.successGreen,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
-                          side: const BorderSide(color: Color(0xFF1B1B1B), width: 2),
+                          side: const BorderSide(color: AppTheme.darkText, width: 2),
                         ),
                         elevation: 0,
                       ),
@@ -127,7 +128,7 @@ class SuccessScreen extends StatelessWidget {
                               color: Colors.white,
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(Icons.phone, size: 14, color: Color(0xFF25D366)),
+                            child: const Icon(Icons.phone, size: 14, color: AppTheme.successGreen),
                           ),
                           const SizedBox(width: 12),
                           const Text(
@@ -152,7 +153,19 @@ class SuccessScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+}
+
+class _InfoRow extends StatelessWidget {
+  final String label;
+  final String value;
+
+  const _InfoRow({
+    required this.label,
+    required this.value,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -161,7 +174,7 @@ class SuccessScreen extends StatelessWidget {
           style: const TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF906F70),
+            color: AppTheme.hintText,
             letterSpacing: 0.5,
           ),
         ),
@@ -170,7 +183,7 @@ class SuccessScreen extends StatelessWidget {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF1B1B1B),
+            color: AppTheme.darkText,
           ),
         ),
       ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../providers/order_provider.dart';
+import 'package:plaza_grill_tipuro/providers/cart_provider.dart';
+import 'package:plaza_grill_tipuro/config/theme.dart';
 
 class HeaderSection extends StatelessWidget {
   const HeaderSection({super.key});
@@ -10,8 +11,8 @@ class HeaderSection extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: const BoxDecoration(
-        color: Color(0xFFF9F9F9),
-        border: Border(bottom: BorderSide(color: Color(0xFF1B1B1B), width: 2)),
+        color: AppTheme.background,
+        border: Border(bottom: BorderSide(color: AppTheme.darkText, width: 2)),
       ),
       child: Column(
         children: [
@@ -23,7 +24,7 @@ class HeaderSection extends StatelessWidget {
               // Hamburger icon placeholder
               const Icon(
                 Icons.fastfood_rounded,
-                color: Color(0xFF1B1B1B),
+                color: AppTheme.darkText,
                 size: 28,
               ),
               // Brand name
@@ -34,7 +35,7 @@ class HeaderSection extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFFB80035),
+                    color: AppTheme.primaryRed,
                     letterSpacing: -0.5,
                   ),
                 ),
@@ -43,15 +44,15 @@ class HeaderSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF9F9F9),
+                  color: AppTheme.background,
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
-                  '\$1 = ${OrderProvider.exchangeRate.toStringAsFixed(2)} Bs',
+                  '\$1 = ${CartProvider.exchangeRate.toStringAsFixed(2)} Bs',
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
-                    color: Color(0xFF1B1B1B),
+                    color: AppTheme.darkText,
                   ),
                 ),
               ),
@@ -63,16 +64,16 @@ class HeaderSection extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: const Color(0xFFF9F9F9),
+              color: AppTheme.background,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: const Color(0xFF1B1B1B), width: 1),
+              border: Border.all(color: AppTheme.darkText, width: 1),
             ),
             child: const Row(
               children: [
                 Icon(
                   Icons.access_time_rounded,
                   size: 18,
-                  color: Color(0xFF1B1B1B),
+                  color: AppTheme.darkText,
                 ),
                 SizedBox(width: 8),
                 Text(
@@ -80,7 +81,7 @@ class HeaderSection extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF1B1B1B),
+                    color: AppTheme.darkText,
                   ),
                 ),
               ],
@@ -93,9 +94,9 @@ class HeaderSection extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFFFBBF24),
+                color: AppTheme.primaryYellow,
                 borderRadius: BorderRadius.circular(999),
-                border: Border.all(color: const Color(0xFF1B1B1B), width: 1.5),
+                border: Border.all(color: AppTheme.darkText, width: 1.5),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -103,15 +104,15 @@ class HeaderSection extends StatelessWidget {
                   const Icon(
                     Icons.currency_exchange,
                     size: 14,
-                    color: Color(0xFF1B1B1B),
+                    color: AppTheme.darkText,
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    'TASA DEL DÍA: ${OrderProvider.exchangeRate.toStringAsFixed(2)} BS',
+                    'TASA DEL DÍA: ${CartProvider.exchangeRate.toStringAsFixed(2)} BS',
                     style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
-                      color: Color(0xFF1B1B1B),
+                      color: AppTheme.darkText,
                       letterSpacing: 0.5,
                     ),
                   ),

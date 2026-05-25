@@ -1,11 +1,13 @@
-class DeliveryZone {
+class AddOnOption {
   final String id;
   final String name;
   final double price;
+  bool isSelected;
 
-  const DeliveryZone({
+  AddOnOption({
     required this.id,
     required this.name,
-    required this.price,
+    this.price = 0.0,
+    this.isSelected = false,
   });
 }
