@@ -81,9 +81,9 @@ class SaucesSection extends StatelessWidget {
                             ),
                           ),
                         ),
-                        if (sauce.extraCostUsd > 0)
+                        if (sauce.price > 0)
                           Text(
-                            '+\$${sauce.extraCostUsd.toStringAsFixed(2)}',
+                            '+\$${sauce.price.toStringAsFixed(2)}',
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,

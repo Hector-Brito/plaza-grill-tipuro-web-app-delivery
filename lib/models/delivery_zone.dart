@@ -1,11 +1,6 @@
 class DeliveryZone {
   final String name;
-  final double costUsd;
+  final double price;
 
-  const DeliveryZone({required this.name, required this.costUsd});
-
-  String get displayCost {
-    if (costUsd <= 0) return '\$0';
-    return '\$${costUsd.toStringAsFixed(costUsd == costUsd.roundToDouble() ? 0 : 1)}';
-  }
+  const DeliveryZone({required this.name, required this.price});
 }

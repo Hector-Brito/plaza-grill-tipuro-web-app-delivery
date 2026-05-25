@@ -143,7 +143,7 @@ class _ProductCardState extends State<_ProductCard> {
               ),
               const SizedBox(width: 12),
               Text(
-                '\$${widget.item.priceUsd.toStringAsFixed(0)}',
+                '\$${widget.item.price.toStringAsFixed(0)}',
                 style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w800,
@@ -195,9 +195,10 @@ class _ProductCardState extends State<_ProductCard> {
                     child: TextField(
                       controller: _noteController,
                       onChanged: (value) {
-                        context
-                            .read<OrderProvider>()
-                            .setItemNote(widget.item, value);
+                        context.read<OrderProvider>().setItemNote(
+                          widget.item,
+                          value,
+                        );
                       },
                       style: const TextStyle(fontSize: 13),
                       maxLines: 1,
@@ -213,7 +214,9 @@ class _ProductCardState extends State<_ProductCard> {
                           color: Color(0xFFB80035),
                         ),
                         contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 8),
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
                         isDense: true,
                         filled: true,
                         fillColor: const Color(0xFFFFF8E1),

@@ -69,17 +69,14 @@ class CheckoutSection extends StatelessWidget {
                 isExpanded: true,
                 hint: const Text(
                   'Selecciona una zona...',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF906F70),
-                  ),
+                  style: TextStyle(fontSize: 14, color: Color(0xFF906F70)),
                 ),
                 value: provider.selectedZone,
                 items: provider.deliveryZones.map((zone) {
                   return DropdownMenuItem(
                     value: zone,
                     child: Text(
-                      '${zone.name} (${zone.displayCost})',
+                      '${zone.name} (${zone.price})',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -113,18 +110,14 @@ class CheckoutSection extends StatelessWidget {
             ),
             child: TextField(
               onChanged: provider.setReferencePoint,
-              style: const TextStyle(
-                fontSize: 14,
-                color: Color(0xFF1B1B1B),
-              ),
+              style: const TextStyle(fontSize: 14, color: Color(0xFF1B1B1B)),
               decoration: const InputDecoration(
                 hintText: 'Ej: Casa blanca al lado del mercado...',
-                hintStyle: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF906F70),
-                ),
+                hintStyle: TextStyle(fontSize: 14, color: Color(0xFF906F70)),
                 contentPadding: EdgeInsets.symmetric(
-                    horizontal: 14, vertical: 14),
+                  horizontal: 14,
+                  vertical: 14,
+                ),
                 border: InputBorder.none,
               ),
             ),
@@ -184,8 +177,10 @@ class CheckoutSection extends StatelessWidget {
                   ? () async {
                       final url = Uri.parse(provider.whatsappUrl);
                       if (await canLaunchUrl(url)) {
-                        await launchUrl(url,
-                            mode: LaunchMode.externalApplication);
+                        await launchUrl(
+                          url,
+                          mode: LaunchMode.externalApplication,
+                        );
                       }
                     }
                   : null,
@@ -195,8 +190,7 @@ class CheckoutSection extends StatelessWidget {
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
-                  side: const BorderSide(
-                      color: Color(0xFF1B1B1B), width: 2),
+                  side: const BorderSide(color: Color(0xFF1B1B1B), width: 2),
                 ),
                 elevation: 0,
               ),
@@ -211,7 +205,11 @@ class CheckoutSection extends StatelessWidget {
                       color: Colors.white,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.phone, size: 16, color: Color(0xFF25D366)),
+                    child: const Icon(
+                      Icons.phone,
+                      size: 16,
+                      color: Color(0xFF25D366),
+                    ),
                   ),
                   const SizedBox(width: 10),
                   const Text(
@@ -249,8 +247,7 @@ class CheckoutSection extends StatelessWidget {
                 foregroundColor: const Color(0xFF1B1B1B),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
-                  side: const BorderSide(
-                      color: Color(0xFF1B1B1B), width: 2),
+                  side: const BorderSide(color: Color(0xFF1B1B1B), width: 2),
                 ),
                 elevation: 0,
               ),

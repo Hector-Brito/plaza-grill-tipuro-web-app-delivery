@@ -1,7 +1,7 @@
 class MenuItem {
   final String name;
   final String description;
-  final double priceUsd;
+  final double price;
   final String category;
   int quantity;
   String note;
@@ -9,11 +9,11 @@ class MenuItem {
   MenuItem({
     required this.name,
     required this.description,
-    required this.priceUsd,
+    required this.price,
     required this.category,
     this.quantity = 0,
     this.note = '',
   });
 
-  double get totalUsd => priceUsd * quantity;
+  double get totalPrice => price * quantity;
 }
