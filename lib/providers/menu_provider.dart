@@ -15,8 +15,8 @@ class MenuProvider extends ChangeNotifier {
   List<String> get categories {
     final allSubcategories = _menuItems
         .where(
-          (e) => e.subcategory != 'Kiosko' && e.subcategory != 'Adicionales',
-        ) // Hide Kiosko and Adicionales from main menu loop
+          (e) => e.subcategory != 'Adicionales',
+        ) // Hide Adicionales from main menu loop
         .map((e) => e.subcategory)
         .toSet()
         .toList();
@@ -30,6 +30,7 @@ class MenuProvider extends ChangeNotifier {
       'Raciones',
       'Parrillas',
       'Bebidas',
+      'Kiosko',
     ];
 
     allSubcategories.sort((a, b) {
