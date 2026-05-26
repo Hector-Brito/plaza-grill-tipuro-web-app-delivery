@@ -17,33 +17,34 @@ class CategoryAccordion extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: AppTheme.darkText, width: 1.5),
+        child: ExpansionTile(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.zero,
+            side: BorderSide(color: AppTheme.darkText, width: 1.5),
           ),
-          clipBehavior: Clip.hardEdge,
-          child: ExpansionTile(
-            initiallyExpanded: false,
-            tilePadding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 4,
-            ),
-            backgroundColor: Colors.white,
-            collapsedBackgroundColor: AppTheme.primaryYellow,
-            iconColor: AppTheme.darkText,
-            collapsedIconColor: AppTheme.darkText,
-            title: Text(
-              categoryName,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w800,
-                color: AppTheme.primaryRed,
-                letterSpacing: 0.5,
-              ),
-            ),
-            children: items.map((item) => ProductCard(item: item)).toList(),
+          collapsedShape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.zero,
+            side: BorderSide(color: AppTheme.darkText, width: 1.5),
           ),
+          initiallyExpanded: false,
+          tilePadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 4,
+          ),
+          backgroundColor: Colors.white,
+          collapsedBackgroundColor: AppTheme.primaryYellow,
+          iconColor: AppTheme.darkText,
+          collapsedIconColor: AppTheme.darkText,
+          title: Text(
+            categoryName,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+              color: AppTheme.primaryRed,
+              letterSpacing: 0.5,
+            ),
+          ),
+          children: items.map((item) => ProductCard(item: item)).toList(),
         ),
       ),
     );

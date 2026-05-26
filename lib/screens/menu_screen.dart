@@ -4,7 +4,6 @@ import 'package:plaza_grill_tipuro/providers/menu_provider.dart';
 import 'package:plaza_grill_tipuro/widgets/menu/header_section.dart';
 import 'package:plaza_grill_tipuro/widgets/menu/menu_category_section.dart';
 import 'package:plaza_grill_tipuro/widgets/menu/checkout_section.dart';
-
 import 'package:plaza_grill_tipuro/config/theme.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -33,9 +32,7 @@ class _MenuScreenState extends State<MenuScreen> {
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: isDesktop ? 1000 : 480,
-            ),
+            constraints: BoxConstraints(maxWidth: isDesktop ? 1000 : 480),
             child: Consumer<MenuProvider>(
               builder: (context, menuProvider, child) {
                 if (menuProvider.isLoadingMenu) {
@@ -79,20 +76,14 @@ class _MenuScreenState extends State<MenuScreen> {
                         ),
                       ),
                       // Divisor vertical
-                      Container(
-                        width: 1.5,
-                        color: AppTheme.darkText,
-                      ),
+                      Container(width: 1.5, color: AppTheme.darkText),
                       // Resumen de Orden
                       const Expanded(
                         flex: 4,
                         child: SingleChildScrollView(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(height: 16),
-                              CheckoutSection(),
-                            ],
+                            children: [SizedBox(height: 16), CheckoutSection()],
                           ),
                         ),
                       ),

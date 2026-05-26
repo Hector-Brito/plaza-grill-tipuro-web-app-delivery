@@ -19,14 +19,13 @@ class HeaderSection extends StatelessWidget {
           // Top bar: Logo + Rate
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Hamburger icon placeholder
-              const Icon(
-                Icons.fastfood_rounded,
-                color: AppTheme.darkText,
-                size: 28,
-              ),
+              // const Icon(
+              //   Icons.fastfood_rounded,
+              //   color: AppTheme.darkText,
+              //   size: 28,
+              // ),
               // Brand name
               const Expanded(
                 child: Text(
@@ -41,18 +40,37 @@ class HeaderSection extends StatelessWidget {
                 ),
               ),
               // Rate badge inline
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppTheme.background,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  '\$1 = ${CartProvider.exchangeRate.toStringAsFixed(2)} Bs',
-                  style: const TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w700,
-                    color: AppTheme.darkText,
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppTheme.primaryYellow,
+                    borderRadius: BorderRadius.circular(999),
+                    border: Border.all(color: AppTheme.darkText, width: 1.5),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(
+                        Icons.currency_exchange,
+                        size: 14,
+                        color: AppTheme.darkText,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        'TASA DEL DÍA: ${CartProvider.exchangeRate.toStringAsFixed(2)} BS',
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.darkText,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -88,38 +106,6 @@ class HeaderSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          // Daily rate badge
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppTheme.primaryYellow,
-                borderRadius: BorderRadius.circular(999),
-                border: Border.all(color: AppTheme.darkText, width: 1.5),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.currency_exchange,
-                    size: 14,
-                    color: AppTheme.darkText,
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    'TASA DEL DÍA: ${CartProvider.exchangeRate.toStringAsFixed(2)} BS',
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                      color: AppTheme.darkText,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
     );
