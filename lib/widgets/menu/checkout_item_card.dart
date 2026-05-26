@@ -25,7 +25,6 @@ class CheckoutItemCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Detalles
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,16 +48,12 @@ class CheckoutItemCard extends StatelessWidget {
                         horizontal: 8,
                         vertical: 4,
                       ),
-                      decoration: BoxDecoration(
-                        color: AppTheme.darkText,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
                       child: Text(
                         '${item.quantity}x',
                         style: const TextStyle(
-                          color: Colors.white,
+                          color: AppTheme.darkText,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12,
+                          fontSize: 15,
                         ),
                       ),
                     ),
@@ -68,7 +63,7 @@ class CheckoutItemCard extends StatelessWidget {
                       style: const TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 14,
-                        color: AppTheme.primaryRed,
+                        color: AppTheme.darkText,
                       ),
                     ),
                   ],

@@ -34,10 +34,20 @@ class MenuItem {
 
     final lowerName = name.toLowerCase();
     if (lowerName.contains('adicional')) return 'Adicionales';
-    if (lowerName.contains('ración') || lowerName.contains('racion') || lowerName.contains('tequeño') || lowerName.contains('r.')) return 'Raciones';
-    if (lowerName.contains('hamburguesa') || lowerName.contains('super')) return 'Hamburguesas';
-    if (lowerName.contains('perro') || lowerName.contains('polaco') || lowerName.contains('choripan') || lowerName.contains('parripan')) return 'Perros Calientes';
-    if (lowerName.contains('enrollado') || lowerName.contains('pepito')) return 'Enrollados';
+    if (lowerName.contains('ración') ||
+        lowerName.contains('racion') ||
+        lowerName.contains('tequeño') ||
+        lowerName.contains('r.'))
+      return 'Raciones';
+    if (lowerName.contains('hamburguesa') || lowerName.contains('super'))
+      return 'Hamburguesas';
+    if (lowerName.contains('perro') ||
+        lowerName.contains('polaco') ||
+        lowerName.contains('choripan') ||
+        lowerName.contains('parripan'))
+      return 'Perros Calientes';
+    if (lowerName.contains('enrollado') || lowerName.contains('pepito'))
+      return 'Enrollados';
     if (lowerName.contains('papa')) return 'Papas';
     if (lowerName.contains('parrilla')) return 'Parrillas';
 
