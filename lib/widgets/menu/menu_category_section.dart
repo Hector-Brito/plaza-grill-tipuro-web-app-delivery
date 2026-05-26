@@ -16,7 +16,7 @@ class _MenuCategorySectionState extends State<MenuCategorySection> {
 
   @override
   Widget build(BuildContext context) {
-    final provider = context.read<MenuProvider>();
+    final provider = context.watch<MenuProvider>();
     final categories = provider.categories;
 
     if (categories.isEmpty) return const SizedBox.shrink();

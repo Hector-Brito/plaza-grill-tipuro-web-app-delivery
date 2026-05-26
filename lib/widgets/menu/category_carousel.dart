@@ -17,11 +17,10 @@ class CategoryCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 46,
-      child: ListView.separated(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
         itemCount: categories.length,
-        separatorBuilder: (context, index) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           final category = categories[index];
           final isActive = category == selectedCategory;
@@ -31,9 +30,12 @@ class CategoryCarousel extends StatelessWidget {
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               curve: Curves.easeOut,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              margin: const EdgeInsets.only(right: 12.0),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
-                color: isActive ? AppTheme.primaryYellow : AppTheme.cardBackground,
+                color: isActive
+                    ? AppTheme.primaryYellow
+                    : AppTheme.cardBackground,
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(
                   color: isActive ? AppTheme.darkText : const Color(0xFFD1D1D1),

@@ -52,6 +52,7 @@ class MenuProvider extends ChangeNotifier {
   }
 
   Future<void> loadMenuFromAppSheet() async {
+    if (isLoadingMenu) return;
     isLoadingMenu = true;
     hasMenuError = false;
     notifyListeners();
