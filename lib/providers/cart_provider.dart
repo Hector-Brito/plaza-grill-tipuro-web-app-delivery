@@ -63,6 +63,14 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateCartItem(CartItem updatedItem) {
+    final index = _cartItems.indexWhere((item) => item.cartItemId == updatedItem.cartItemId);
+    if (index != -1) {
+      _cartItems[index] = updatedItem;
+      notifyListeners();
+    }
+  }
+
   void updateCartItemQuantity(String cartItemId, int delta) {
     final idx = _cartItems.indexWhere((item) => item.cartItemId == cartItemId);
     if (idx != -1) {

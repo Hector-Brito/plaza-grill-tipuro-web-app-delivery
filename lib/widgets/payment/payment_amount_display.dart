@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:plaza_grill_tipuro/enums/venezuelan_bank.dart';
 import 'package:plaza_grill_tipuro/config/theme.dart';
 
 class PaymentAmountDisplay extends StatelessWidget {
@@ -11,46 +13,168 @@ class PaymentAmountDisplay extends StatelessWidget {
     required this.totalUsd,
   });
 
+  String _getBankNameWithCode(String code) {
+    try {
+      final bank = VenezuelanBank.values.firstWhere((b) => b.code == code);
+      return '${bank.name} (${bank.code})';
+    } catch (_) {
+      if (code == '0102') return 'Banco de Venezuela (0102)';
+      if (code == '0115') return 'Banco Exterior (0115)';
+      return 'Banco ($code)';
+    }
+  }
+
+  String _formatPhone(String phone) {
+    var cleaned = phone.replaceAll(RegExp(r'[^0-9]'), '');
+    if (cleaned.startsWith('58') && cleaned.length > 10) {
+      cleaned = '0${cleaned.substring(2)}';
+    }
+    if (cleaned.length == 11) {
+      return '${cleaned.substring(0, 4)}-${cleaned.substring(4)}';
+    }
+    return phone;
+  }
+
+  String _formatDoc(String doc) {
+    if (doc.isEmpty) return '';
+    final cleaned = doc.replaceAll(RegExp(r'[^a-zA-Z0-9]'), '');
+    if (cleaned.isEmpty) return '';
+    
+    final prefix = cleaned[0].toUpperCase();
+    final numberStr = cleaned.substring(1);
+    
+    if ((prefix == 'J' || prefix == 'G') && numberStr.length == 9) {
+      return '$prefix-${numberStr.substring(0, 8)}-${numberStr.substring(8)}';
+    } else {
+      final buffer = StringBuffer();
+      int count = 0;
+      for (int i = numberStr.length - 1; i >= 0; i--) {
+        if (count > 0 && count % 3 == 0) {
+          buffer.write('.');
+        }
+        buffer.write(numberStr[i]);
+        count++;
+      }
+      final reversedNumber = buffer.toString().split('').reversed.join('');
+      return '$prefix-$reversedNumber';
+    }
+  }
+
+  String _formatAmountVes(double amount) {
+    final parts = amount.toStringAsFixed(2).split('.');
+    final intPart = parts[0];
+    final decPart = parts[1];
+    
+    final buffer = StringBuffer();
+    int count = 0;
+    for (int i = intPart.length - 1; i >= 0; i--) {
+      if (count > 0 && count % 3 == 0) {
+        buffer.write('.');
+      }
+      buffer.write(intPart[i]);
+      count++;
+    }
+    final reversedInt = buffer.toString().split('').reversed.join('');
+    return '$reversedInt,$decPart';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bankCode = dotenv.env['BANCO_DESTINO'] ?? '0102';
+    final rawPhone = dotenv.env['TELEFONO_DESTINO'] ?? '04128798008';
+    final rawDoc = dotenv.env['CEDULA_DESTINO'] ?? 'J506736853';
+
+    final bankName = _getBankNameWithCode(bankCode);
+    final phone = _formatPhone(rawPhone);
+    final doc = _formatDoc(rawDoc);
+    final amountText = _formatAmountVes(totalVes);
+
+    // Warm sticky-note yellow color
+    const stickyYellow = Color(0xFFFFF0C4);
+    // Dark brown/gold color for labels to make it look premium
+    const labelColor = Color(0xFF7A5C29);
+
+    const labelStyle = TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.w800,
+      color: labelColor,
+      letterSpacing: 0.5,
+    );
+
+    const valueStyle = TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w800,
+      color: AppTheme.darkText,
+      height: 1.2,
+    );
+
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppTheme.primaryYellow,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppTheme.darkText, width: 2),
+        color: stickyYellow,
+        borderRadius: BorderRadius.circular(4),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 8,
+            offset: const Offset(2, 4),
+          ),
+        ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'MONTO A PAGAR',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w800,
-              color: AppTheme.darkText,
-              letterSpacing: 1,
-            ),
+          const Text('BANCO DESTINO', style: labelStyle),
+          const SizedBox(height: 2),
+          Text(bankName, style: valueStyle),
+          const SizedBox(height: 12),
+
+          const Text('TELÉFONO', style: labelStyle),
+          const SizedBox(height: 2),
+          Text(phone, style: valueStyle),
+          const SizedBox(height: 12),
+
+          const Text('C.I / RIF', style: labelStyle),
+          const SizedBox(height: 2),
+          Text(doc, style: valueStyle),
+          
+          const SizedBox(height: 16),
+          const Divider(
+            color: Color(0xFFE2C48D),
+            thickness: 1,
+            height: 1,
           ),
+          const SizedBox(height: 16),
+
+          const Text('MONTO A PAGAR', style: labelStyle),
           const SizedBox(height: 4),
-          Text(
-            '${totalVes.toStringAsFixed(2)} Bs',
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
-              color: AppTheme.darkText,
-            ),
-          ),
-          Text(
-            '(\$${totalUsd.toStringAsFixed(2)})',
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: AppTheme.textMuted,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                '$amountText Bs',
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w900,
+                  color: AppTheme.primaryRed,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                '(\$${totalUsd.toStringAsFixed(2)})',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w800,
+                  color: labelColor.withValues(alpha: 0.8),
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 }
+

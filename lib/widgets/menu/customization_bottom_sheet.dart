@@ -15,10 +15,15 @@ import 'package:plaza_grill_tipuro/widgets/menu/customization/quantity_selector.
 
 class CustomizationBottomSheet extends StatefulWidget {
   final MenuItem item;
+  final CartItem? cartItem;
 
-  const CustomizationBottomSheet({super.key, required this.item});
+  const CustomizationBottomSheet({
+    super.key,
+    required this.item,
+    this.cartItem,
+  });
 
-  static Future<void> show(BuildContext context, MenuItem item) {
+  static Future<void> show(BuildContext context, MenuItem item, {CartItem? cartItem}) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -30,7 +35,7 @@ class CustomizationBottomSheet extends StatefulWidget {
         alignment: Alignment.bottomCenter,
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 480),
-          child: CustomizationBottomSheet(item: item),
+          child: CustomizationBottomSheet(item: item, cartItem: cartItem),
         ),
       ),
     );
@@ -53,12 +58,18 @@ class _CustomizationBottomSheetState extends State<CustomizationBottomSheet> {
   @override
   void initState() {
     super.initState();
+    if (widget.cartItem != null) {
+      _quantity = widget.cartItem!.quantity;
+      _noteController.text = widget.cartItem!.specialNote;
+    }
     _removableIngredients = widget.item.removableIngredients
         .map(
           (e) => CustomizationOption(
             id: e.id,
             name: e.name,
-            isRemoved: e.isRemoved,
+            isRemoved: widget.cartItem != null
+                ? widget.cartItem!.removedIngredients.any((ri) => ri.id == e.id)
+                : e.isRemoved,
           ),
         )
         .toList();
@@ -68,7 +79,9 @@ class _CustomizationBottomSheetState extends State<CustomizationBottomSheet> {
             id: e.id,
             name: e.name,
             price: e.price,
-            isSelected: e.isSelected,
+            isSelected: widget.cartItem != null
+                ? widget.cartItem!.selectedExtras.any((se) => se.id == e.id)
+                : e.isSelected,
           ),
         )
         .toList();
@@ -78,10 +91,27 @@ class _CustomizationBottomSheetState extends State<CustomizationBottomSheet> {
             id: e.id,
             name: e.name,
             price: e.price,
-            isSelected: e.isSelected,
+            isSelected: widget.cartItem != null
+                ? widget.cartItem!.selectedProtein?.id == e.id
+                : e.isSelected,
           ),
         )
         .toList();
+    if (widget.cartItem != null && widget.cartItem!.selectedProtein != null) {
+      for (final p in _availableProteins) {
+        if (p.id == widget.cartItem!.selectedProtein!.id) {
+          _selectedProtein = p;
+          break;
+        }
+      }
+    } else {
+      for (final p in _availableProteins) {
+        if (p.isSelected) {
+          _selectedProtein = p;
+          break;
+        }
+      }
+    }
   }
 
   Future<void> _showQuantityDialog() async {
@@ -131,7 +161,7 @@ class _CustomizationBottomSheetState extends State<CustomizationBottomSheet> {
     }
 
     final cartItem = CartItem(
-      cartItemId: const Uuid().v4(),
+      cartItemId: widget.cartItem?.cartItemId ?? const Uuid().v4(),
       menuItem: widget.item,
       quantity: _quantity,
       specialNote: _noteController.text,
@@ -142,9 +172,15 @@ class _CustomizationBottomSheetState extends State<CustomizationBottomSheet> {
       selectedProtein: _selectedProtein,
     );
 
-    context.read<CartProvider>().addToCart(cartItem);
-    Navigator.pop(context);
-    CustomSnackBar.showSuccess(context, '${widget.item.name} agregado al carrito');
+    if (widget.cartItem != null) {
+      context.read<CartProvider>().updateCartItem(cartItem);
+      Navigator.pop(context);
+      CustomSnackBar.showSuccess(context, '${widget.item.name} actualizado');
+    } else {
+      context.read<CartProvider>().addToCart(cartItem);
+      Navigator.pop(context);
+      CustomSnackBar.showSuccess(context, '${widget.item.name} agregado al carrito');
+    }
   }
 
   @override
@@ -181,7 +217,9 @@ class _CustomizationBottomSheetState extends State<CustomizationBottomSheet> {
             children: [
               Expanded(
                 child: Text(
-                  'Personalizar ${widget.item.name}',
+                  widget.cartItem != null
+                      ? 'Editar ${widget.item.name}'
+                      : 'Personalizar ${widget.item.name}',
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w800,
@@ -289,7 +327,9 @@ class _CustomizationBottomSheetState extends State<CustomizationBottomSheet> {
                 elevation: 0,
               ),
               child: Text(
-                'AGREGAR AL PEDIDO (\$${cartItemDraft.totalPrice.toStringAsFixed(2)})',
+                widget.cartItem != null
+                    ? 'ACTUALIZAR PEDIDO (\$${cartItemDraft.totalPrice.toStringAsFixed(2)})'
+                    : 'AGREGAR AL PEDIDO (\$${cartItemDraft.totalPrice.toStringAsFixed(2)})',
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w800,

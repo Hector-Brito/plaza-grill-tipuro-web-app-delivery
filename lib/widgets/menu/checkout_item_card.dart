@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:plaza_grill_tipuro/models/cart_item.dart';
 import 'package:plaza_grill_tipuro/config/theme.dart';
 
+import 'package:plaza_grill_tipuro/widgets/menu/customization_bottom_sheet.dart';
+
 class CheckoutItemCard extends StatelessWidget {
   final CartItem item;
   final VoidCallback onDelete;
@@ -14,15 +16,17 @@ class CheckoutItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: const Color(0xFFE5E5E5)),
-      ),
-      child: Row(
+    return GestureDetector(
+      onTap: () => CustomizationBottomSheet.show(context, item.menuItem, cartItem: item),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: const Color(0xFFE5E5E5)),
+        ),
+        child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
@@ -120,6 +124,7 @@ class CheckoutItemCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

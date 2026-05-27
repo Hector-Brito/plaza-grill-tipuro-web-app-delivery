@@ -42,6 +42,13 @@ class PaymentScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Monto a pagar (Nota adhesiva)
+                  PaymentAmountDisplay(
+                    totalVes: cartProvider.totalVes,
+                    totalUsd: cartProvider.totalUsd,
+                  ),
+                  const SizedBox(height: 24),
+
                   const Text(
                     'Validación de Datos',
                     style: TextStyle(
@@ -54,13 +61,6 @@ class PaymentScreen extends StatelessWidget {
                   const Text(
                     'Ingresa los datos de tu pago para validarlo al instante.',
                     style: TextStyle(fontSize: 14, color: AppTheme.textMuted),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Monto a pagar
-                  PaymentAmountDisplay(
-                    totalVes: cartProvider.totalVes,
-                    totalUsd: cartProvider.totalUsd,
                   ),
                   const SizedBox(height: 24),
 
