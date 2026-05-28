@@ -71,13 +71,27 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 12),
-              Text(
-                '\$${item.price.toStringAsFixed(0)}',
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w800,
-                  color: AppTheme.darkText,
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    '\$${item.price.toStringAsFixed(2)}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                      color: AppTheme.darkText,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    '≈ ${(item.price * CartProvider.exchangeRate).toStringAsFixed(2)} VES',
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: AppTheme.textMuted,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
