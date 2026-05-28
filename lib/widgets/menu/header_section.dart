@@ -20,12 +20,6 @@ class HeaderSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Hamburger icon placeholder
-              // const Icon(
-              //   Icons.fastfood_rounded,
-              //   color: AppTheme.darkText,
-              //   size: 28,
-              // ),
               // Brand name
               const Expanded(
                 child: Text(
